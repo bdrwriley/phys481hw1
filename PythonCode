@@ -1,0 +1,71 @@
+#Problem 1
+multiples=[]
+for i in range(1000):
+    if 3*i<1000: multiples.append(3*i)
+    if 5*i<1000: multiples.append(5*i)
+
+print(sum(multiples))
+
+#Problem 2
+fib=[1,2]
+for i in fib:
+    if (fib[-1]+fib[-2])<4000000: fib.append(fib[-1]+fib[-2])
+#Attempting to run through the list and append the sum of the penultimate and ultimate elements if they are less than 4 mil
+
+print(fib)
+
+fibeven=[]
+for i in fib:
+    if i%2==0: fibeven.append(i)
+#Run through the list again, and if the modulus over 2 is 0, it is an even number and gets appended to a new list
+
+print(fibeven)
+print(sum(fibeven))
+
+#Problem 3
+def primes(n):
+    primefac=[]
+    d=2
+    while d*d<=n: #the largest possible prime factor would be in the case of a perfect square
+        while (n%d)==0: 
+            primefac.append(d) #Adds d to the factor list if there is no remainder and it's a factor
+            n//=d #factors out d
+        d+=1
+    print(primefac)
+    print(max(primefac))  #The answer is the max of this array
+
+primes(600851475143)
+
+#Problem 4
+import numpy as np
+palindromes=[]
+def checkpalindrome(n):
+    digits=[]
+    string=str(n)
+    for i in string:
+        digits.append(int(i))
+    digitsflip=list(reversed(digits))  #Splits the number into a list of its digits, and creates a flipped list
+    check=np.array_equal(digits,digitsflip)  #check is True if both lists are identical
+    if check==True:
+        palindromes.append(n)  #If the check is true, and the number is a palindrome, it gets added to the list
+
+for x in range(10000,998002):  #The smallest possible product of 3 digit numbers is 100*100, and the largest is 999*999
+    checkpalindrome(x)
+    
+print(max(palindromes)) #The answer is the maximum of this array
+
+#Problem 5
+x=2520  #It MUST be bigger than the smallest multiple of 1 thru 10, so I'll brute force it upwards from there
+found=False
+while found==False:
+    c=0  #keeps a counter as I run modulus checks; if the counter gets all the way to 20, I've found the result
+    for i in range(1,21):
+        if x%i==0:
+            c=c+1
+        if x%i!=0:  #reset counter if it fails
+            c=0
+            x=x+2  #making sure it won't get stuck checking the same number over and over. Adding 2 because the answer must be even
+    if c==20:
+        print(x)
+        found=True
+    x=x+2  #if it failed the c check, the while loop moves to the next number
